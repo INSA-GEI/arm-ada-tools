@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ressources>
+  <file language="ada">ressources</file> 
+
+  <image id="Ananas" color="8bpp" packed="true">./sprites/16x16/Ananas.bmp</image>
+  <image id="Cerise" color="8bpp" packed="true">./sprites/16x16/Cerise.bmp</image>
+  <image id="Melon" color="8bpp" packed="true">./sprites/16x16/Melon.bmp</image>
+  <image id="Orange" color="8bpp" packed="true">./sprites/16x16/Orange.bmp</image>
+  <image id="Fraise" color="8bpp" packed="true">./sprites/16x16/Fraise.bmp</image>
+  <image id="Pomme" color="8bpp" packed="true">./sprites/16x16/Pomme.bmp</image>
+  <image id="Truc" color="8bpp" packed="true">./sprites/16x16/Truc.bmp</image>
+  <image id="Pac_Gum" color="8bpp" packed="true">./sprites/16x16/Pac_Gum.bmp</image>
+  <image id="Pacman_Gauche" color="8bpp" packed="true">./sprites/16x16/Pacman_Gauche.bmp</image>
+  <image id="Pacman_Gauche_2" color="8bpp" packed="true">./sprites/16x16/Pacman_Gauche_2.bmp</image>
+  <image id="Pacman_Droit" color="8bpp" packed="true">./sprites/16x16/Pacman_Droit.bmp</image>
+  <image id="Pacman_Droit_2" color="8bpp" packed="true">./sprites/16x16/Pacman_Droit_2.bmp</image>
+  <image id="Pacman_Haut" color="8bpp" packed="true">./sprites/16x16/Pacman_Haut.bmp</image>
+  <image id="Pacman_Haut_2" color="8bpp" packed="true">./sprites/16x16/Pacman_Haut_2.bmp</image>
+  <image id="Pacman_Bas" color="8bpp" packed="true">./sprites/16x16/Pacman_Bas.bmp</image>
+  <image id="Pacman_Bas_2" color="8bpp" packed="true">./sprites/16x16/Pacman_Bas_2.bmp</image>
+  <image id="Fantome_Jaune" color="8bpp" packed="true">./sprites/16x16/Fant_Jaune.bmp</image>
+  <image id="Fantome_Rose" color="8bpp" packed="true">./sprites/16x16/Fant_Rose.bmp</image>
+  <image id="Fantome_Bleu" color="8bpp" packed="true">./sprites/16x16/Fant_Bleu.bmp</image>
+  <image id="Fantome_Rouge" color="8bpp" packed="true">./sprites/16x16/Fant_Rouge.bmp</image>
+  <image id="Fantome_Vuln" color="8bpp" packed="true">./sprites/16x16/Fant_Vuln.bmp</image>
+
+</ressources>
+

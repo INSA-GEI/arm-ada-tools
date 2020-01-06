@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ressources>
+  <file language="ada">sprites</file> 
+
+  <image id="Bloc_Bleu" color="8bpp" packed="true">./sprites/Bleu.bmp</image>
+  <image id="Bloc_Cyan" color="8bpp" packed="true">./sprites/Cyan.bmp</image>
+  <image id="Bloc_Gris" color="8bpp" packed="true">./sprites/Gris.bmp</image>
+  <image id="Bloc_Jaune" color="8bpp" packed="true">./sprites/Jaune.bmp</image>
+  <image id="Bloc_Orange" color="8bpp" packed="true">./sprites/Orange.bmp</image>
+  <image id="Bloc_Rouge" color="8bpp" packed="true">./sprites/Rouge.bmp</image>
+  <image id="Bloc_Vert" color="8bpp" packed="true">./sprites/Vert.bmp</image>
+  <image id="Bloc_Violet" color="8bpp" packed="true">./sprites/Violet.bmp</image>
+
+  <image id="Mur_Horizontal" color="8bpp" packed="true">./sprites/Mur-Horizontal.bmp</image>
+  <image id="Mur_Vertical" color="8bpp" packed="true">./sprites/Mur-vertical.bmp</image>
+  <image id="Mur_Coin_1" color="8bpp" packed="true">./sprites/Mur-Coude-1.bmp</image>
+  <image id="Mur_Coin_2" color="8bpp" packed="true">./sprites/Mur-Coude-2.bmp</image>
+  <image id="Mur_Coin_3" color="8bpp" packed="true">./sprites/Mur-Coude-3.bmp</image>
+  <image id="Mur_Coin_4" color="8bpp" packed="true">./sprites/Mur-Coude-4.bmp</image>
+
+  <image id="Fond_1" color="8bpp" packed="true">./sprites/Fond_1.bmp</image>
+  <image id="Fond_2" color="8bpp" packed="true">./sprites/Fond_2.bmp</image>
+  <image id="Fond_3" color="8bpp" packed="true">./sprites/Fond_3.bmp</image>
+</ressources>
+

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Telecharge la derniere version de l'OS
+mkdir ~/.arm-ada-update.tmp
+cd ~/.arm-ada-update.tmp
+
+cp -v ~/arm-ada/firmware/firmware_LATEST.hex.xz .
+xz -d firmware_LATEST.hex.xz
+
+# Telecharge l'OS
+flashprog firmware_LATEST.hex
+
+# Clean up
+cd ~
+rm -rf ~/.arm-ada-update.tmp
+
+echo Done

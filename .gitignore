@@ -1,5 +1,23 @@
-# Object file
+*.crf
+*.d
 *.o
-
-# Ada Library Information
+*.lst
+*.dep
+*.map
 *.ali
+*.elf
+*.log
+*.bin
+b~*
+*.hex
+*.a
+*.lib
+*.*~
+*~
+export/*.xz
+export/arm-ada
+export/arm-ada_home*.tar.xz
+export/index.html
+*.iex
+*#
+

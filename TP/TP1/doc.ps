@@ -1,0 +1,1437 @@
+%!PS-Adobe-3.0
+%%Title: missionpacman.adb, carte.ads, ecran.ads, lab.ads
+%%For: Sébastien DI MERCURIO
+%%Creator: a2ps version 4.14
+%%CreationDate: Mon Jan 16 14:55:31 2017
+%%BoundingBox: 24 24 571 818
+%%DocumentData: Clean7Bit
+%%Orientation: Portrait
+%%Pages: 4
+%%PageOrder: Ascend
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-BoldOblique
+%%+ font Courier-Oblique
+%%+ font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Symbol
+%%+ font Times-Bold
+%%+ font Times-Roman
+%%DocumentProcessColors: Black 
+%%DocumentSuppliedResources: procset a2ps-a2ps-hdr
+%%+ procset a2ps-black+white-Prolog
+%%+ encoding ISO-8859-1Encoding
+%%EndComments
+/a2psdict 200 dict def
+a2psdict begin
+%%BeginProlog
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+
+% EPSF import as in the Red Book
+/BeginInclude {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+    0 setgray 0 setlinecap
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    gs_languagelevel 1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+} bind def
+
+/EndInclude {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+/BeginEPSF {
+  BeginInclude
+  /showpage { } def
+} bind def
+
+/EndEPSF {
+  EndInclude
+} bind def
+
+% Page prefeed
+/page_prefeed {         % bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} bind def
+
+/deffont {
+  findfont exch scalefont def
+} bind def
+
+/reencode_font {
+  findfont reencode 2 copy definefont pop def
+} bind def
+
+% Function c-show (str => -)
+% centers text only according to x axis.
+/c-show { 
+  dup stringwidth pop
+  2 div neg 0 rmoveto
+  show
+} bind def
+
+% Function l-show (str => -)
+% prints texts so that it ends at currentpoint
+/l-show {
+  dup stringwidth pop neg 
+  0 
+  rmoveto show
+} bind def
+
+% center-fit show (str w => -)
+% show centered, and scale currentfont so that the width is less than w
+/cfshow {
+  exch dup stringwidth pop
+  % If the title is too big, try to make it smaller
+  3 2 roll 2 copy
+  gt
+  { % if, i.e. too big
+    exch div
+    currentfont exch scalefont setfont
+  } { % ifelse
+    pop pop 
+  }
+  ifelse
+  c-show			% center title
+} bind def
+
+% Return the y size of the current font
+% - => fontsize
+/currentfontsize {
+  currentfont /FontType get 0 eq {
+    currentfont /FontMatrix get 3 get
+  }{
+    currentfont /FontMatrix get 3 get 1000 mul
+  } ifelse
+} bind def
+
+% reencode the font
+% <encoding-vector> <fontdict> -> <newfontdict>
+/reencode { %def
+  dup length 5 add dict begin
+    { %forall
+      % <vector> <key> <val>
+      1 index /FID ne 
+      { def }{ pop pop } ifelse
+    } forall
+    /Encoding exch def % -
+
+    % Use the font's bounding box to determine the ascent, descent,
+    % and overall height; don't forget that these values have to be
+    % transformed using the font's matrix.
+    % We use `load' because sometimes BBox is executable, sometimes not.
+    % Since we need 4 numbers an not an array avoid BBox from being executed
+    /FontBBox load aload pop
+    FontMatrix transform /Ascent exch def pop
+    FontMatrix transform /Descent exch def pop
+    /FontHeight Ascent Descent sub def
+
+    % Get the underline position and thickness if they're defined.
+    % Use 1 if they are not defined.
+    currentdict /FontInfo 2 copy known
+    { get
+      /UnderlinePosition 2 copy % <FontInfo> /UP <FontInfo> /UP
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+
+      /UnderlineThickness 2 copy % <FontInfo> /UT <FontInfo> /UT
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+      pop % -
+    }{ pop pop
+    } ifelse
+
+    currentdict
+  end 
+} bind def
+
+% composite fonts for ASCII-EUC mixed strings
+% Version 1.2 1/31/1990
+% Original Ken'ichi HANDA (handa@etl.go.jp)
+% Modified Norio Katayama (katayama@rd.nacsis.ac.jp),1998
+% Extend & Fix Koji Nakamaru (maru@on.cs.keio.ac.jp), 1999
+% Anyone can freely copy, modify, distribute this program.
+
+/copyfont {	% font-dic extra-entry-count  copyfont  font-dic
+	1 index maxlength add dict begin
+	{	1 index /FID ne 2 index /UniqueID ne and
+		{def} {pop pop} ifelse
+	} forall
+	currentdict
+	end
+} bind def
+
+/compositefont { % ASCIIFontName EUCFontName RomanScale RomanOffset Rot(T/F) compositefont font
+    /RomanRotation exch def
+    /RomanOffset exch def
+    /RomanScale exch def
+    userdict /fixeucfont_dict known not {
+	userdict begin
+	    /fixeucfont_dict 2 dict begin
+		/UpperByteEncoding [
+		    16#00 1 16#20 { pop 0 } for
+		    16#21 1 16#28 { 16#20 sub } for
+		    16#29 1 16#2F { pop 0 } for
+		    16#30 1 16#74 { 16#27 sub } for
+		    16#75 1 16#FF { pop 0 } for
+		] def
+	        /LowerByteEncoding [
+		    16#00 1 16#A0 { pop /.notdef } for
+		    16#A1 1 16#FE { 16#80 sub 16 2 string cvrs
+				    (cXX) dup 1 4 -1 roll
+				    putinterval cvn } for
+		    /.notdef
+		] def
+		currentdict
+	    end def
+	end
+    } if
+    findfont dup /FontType get 0 eq {
+	14 dict begin
+	    %
+	    % 7+8 bit EUC font
+	    %
+	    12 dict begin
+		/EUCFont exch def
+		/FontInfo (7+8 bit EUC font) readonly def
+		/PaintType 0 def
+		/FontType 0 def
+		/FontMatrix matrix def
+		% /FontName
+		/Encoding fixeucfont_dict /UpperByteEncoding get def
+		/FMapType 2 def
+		EUCFont /WMode known
+		{ EUCFont /WMode get /WMode exch def }
+		{ /WMode 0 def } ifelse
+		/FDepVector [
+		    EUCFont /FDepVector get 0 get
+		    [ 16#21 1 16#28 {} for 16#30 1 16#74 {} for ]
+		    {
+			13 dict begin
+			    /EUCFont EUCFont def
+			    /UpperByte exch 16#80 add def	
+			    % /FontName
+			    /FontInfo (EUC lower byte font) readonly def
+			    /PaintType 0 def
+			    /FontType 3 def
+			    /FontMatrix matrix def
+			    /FontBBox {0 0 0 0} def
+			    /Encoding
+				fixeucfont_dict /LowerByteEncoding get def
+			    % /UniqueID
+			    % /WMode
+			    /BuildChar {
+				gsave
+				exch dup /EUCFont get setfont
+				/UpperByte get
+				2 string
+				dup 0 4 -1 roll put
+				dup 1 4 -1 roll put
+				dup stringwidth setcharwidth
+				0 0 moveto show
+				grestore
+			    } bind def
+			    currentdict
+			end
+			/lowerbytefont exch definefont
+		    } forall
+		] def
+		currentdict
+	    end
+	    /eucfont exch definefont
+	    exch
+	    findfont 1 copyfont dup begin
+		RomanRotation {
+			/FontMatrix FontMatrix
+			[ 0 RomanScale neg RomanScale 0 RomanOffset neg 0 ]
+			matrix concatmatrix def
+		}{
+			/FontMatrix FontMatrix
+			[ RomanScale 0 0 RomanScale 0 RomanOffset ] matrix concatmatrix
+			def
+			/CDevProc
+			    {pop pop pop pop 0 exch -1000 exch 2 div 880} def
+		} ifelse
+	    end
+	    /asciifont exch definefont
+	    exch
+	    /FDepVector [ 4 2 roll ] def
+	    /FontType 0 def
+	    /WMode 0 def
+	    /FMapType 4 def
+	    /FontMatrix matrix def
+	    /Encoding [0 1] def
+	    /FontBBox {0 0 0 0} def
+%	    /FontHeight 1.0 def % XXXX
+	    /FontHeight RomanScale 1.0 ge { RomanScale }{ 1.0 } ifelse def
+	    /Descent -0.3 def   % XXXX
+	    currentdict
+	end
+	/tmpfont exch definefont
+	pop
+	/tmpfont findfont
+    }{
+	pop findfont 0 copyfont
+    } ifelse
+} def	
+
+/slantfont {	% FontName slant-degree  slantfont  font'
+    exch findfont 1 copyfont begin
+    [ 1 0 4 -1 roll 1 0 0 ] FontMatrix exch matrix concatmatrix
+    /FontMatrix exch def
+    currentdict
+    end
+} def
+
+% Function print line number (<string> # -)
+/# {
+  gsave
+    sx cw mul neg 2 div 0 rmoveto
+    f# setfont
+    c-show
+  grestore
+} bind def
+
+% -------- Some routines to enlight plain b/w printings ---------
+
+% Underline
+% width --
+/dounderline {
+  currentpoint
+  gsave
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    0 rlineto
+    stroke
+  grestore
+} bind def
+
+% Underline a string
+% string --
+/dounderlinestring {
+  stringwidth pop
+  dounderline
+} bind def
+
+/UL {
+  /ul exch store
+} bind def
+
+% Draw a box of WIDTH wrt current font
+% width --
+/dobox {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    stroke
+  grestore
+} bind def
+
+/BX {
+  /bx exch store
+} bind def
+
+% Box a string
+% string --
+/doboxstring {
+  stringwidth pop
+  dobox
+} bind def
+
+%
+% ------------- Color routines ---------------
+%
+/FG /setrgbcolor load def
+
+% Draw the background
+% width --
+/dobackground {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    bgcolor aload pop setrgbcolor
+    fill
+  grestore
+} bind def
+
+% Draw bg for a string
+% string --
+/dobackgroundstring {
+  stringwidth pop
+  dobackground
+} bind def
+
+
+/BG {
+  dup /bg exch store
+  { mark 4 1 roll ] /bgcolor exch store } if
+} bind def
+
+
+/Show {
+  bg { dup dobackgroundstring } if
+  ul { dup dounderlinestring } if
+  bx { dup doboxstring } if
+  show
+} bind def
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T {
+  cw mul x0 add
+  bg { dup currentpoint pop sub dobackground } if
+  ul { dup currentpoint pop sub dounderline } if
+  bx { dup currentpoint pop sub dobox } if
+  y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n {
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+/S {
+  Show
+} bind def
+
+%%BeginResource: procset a2ps-a2ps-hdr 2.0 2
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Function title: prints page header.
+% <ct> <rt> <lt> are passed as argument
+/title { 
+  % 1. Draw the background
+  x v get y v get moveto
+  gsave
+    0 th 2 div neg rmoveto 
+    th setlinewidth
+    0.95 setgray
+    pw 0 rlineto stroke
+  grestore
+  % 2. Border it
+  gsave
+    0.7 setlinewidth
+    pw 0 rlineto
+    0 th neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+  % stk: ct rt lt
+  x v get y v get th sub 1 add moveto
+%%IncludeResource: font Helvetica
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  % 3. The left title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    fnfs 0.8 mul hm rmoveto
+    show			% left title
+  grestore
+  exch
+  % stk: ct ltw rt
+  % 4. the right title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    dup
+    pw exch stringwidth pop fnfs 0.8 mul add sub
+    hm
+    rmoveto
+    show			% right title
+  grestore
+  % stk: ct ltw rtw
+  % 5. the center title
+  gsave
+    pw 3 1 roll
+    % stk: ct pw ltw rtw
+    3 copy 
+    % Move to the center of the left room
+    sub add 2 div hm rmoveto
+    % What is the available space in here?
+    add sub fnfs 0.8 mul sub fnfs 0.8 mul sub
+    % stk: ct space_left
+%%IncludeResource: font Helvetica-Bold
+  fHelvetica-Bold fnfs scalefont setfont
+    cfshow
+  grestore
+} bind def
+
+% Function border: prints virtual page border
+/border { %def
+  gsave				% print four sides
+    0 setgray
+    x v get y v get moveto
+    0.7 setlinewidth		% of the square
+    pw 0 rlineto
+    0 ph neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+} bind def
+
+% Function water: prints a water mark in background
+/water { %def
+  gsave
+    scx scy moveto rotate
+%%IncludeResource: font Times-Bold
+  fTimes-Bold 100 scalefont setfont
+    .97 setgray
+    dup stringwidth pop 2 div neg -50 rmoveto
+    show
+  grestore
+} bind def
+
+% Function rhead: prints the right header
+/rhead {  %def
+  lx ly moveto
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  l-show
+} bind def
+
+% Function footer (cf rf lf -> -)
+/footer {
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  dx dy moveto
+  show
+
+  snx sny moveto
+  l-show
+  
+  fnx fny moveto
+  c-show
+} bind def
+%%EndResource
+%%BeginResource: procset a2ps-black+white-Prolog 2.0 1
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T { 
+  cw mul x0 add y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n { %def
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+}  bind def
+
+/S {
+  Show
+} bind def
+
+/p {
+  false UL
+  false BX
+  fCourier bfs scalefont setfont
+  Show
+} bind def
+
+/sy {
+  false UL
+  false BX
+  fSymbol bfs scalefont setfont
+  Show
+} bind def
+
+/k {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/K {
+  false UL
+  false BX
+  fCourier-Bold bfs scalefont setfont
+  Show
+} bind def
+
+/c {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/C {
+  false UL
+  false BX
+  fCourier-BoldOblique bfs scalefont setfont
+  Show 
+} bind def
+
+/l {
+  false UL
+  false BX
+  fHelvetica bfs scalefont setfont
+  Show
+} bind def
+
+/L {
+  false UL
+  false BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show 
+} bind def
+
+/str{
+  false UL
+  false BX
+  fTimes-Roman bfs scalefont setfont
+  Show
+} bind def
+
+/e{
+  false UL
+  true BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show
+} bind def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier
+%%IncludeResource: font Courier-Oblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Symbol
+%%IncludeResource: font Courier-BoldOblique
+%%BeginResource: encoding ISO-8859-1Encoding
+/ISO-8859-1Encoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright 
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash 
+/zero /one /two /three /four /five /six /seven 
+/eight /nine /colon /semicolon /less /equal /greater /question 
+/at /A /B /C /D /E /F /G 
+/H /I /J /K /L /M /N /O 
+/P /Q /R /S /T /U /V /W 
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore 
+/quoteleft /a /b /c /d /e /f /g 
+/h /i /j /k /l /m /n /o 
+/p /q /r /s /t /u /v /w 
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron 
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /bullet 
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown 
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla 
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis 
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply 
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls 
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla 
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis 
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide 
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+] def
+%%EndResource
+% Initialize page description variables.
+/sh 842 def
+/sw 595 def
+/llx 24 def
+/urx 571 def
+/ury 818 def
+/lly 24 def
+/#copies 1 def
+/th 15.000000 def
+/fnfs 11 def
+/bfs 5.477068 def
+/cw 3.286241 def
+
+% Dictionary for ISO-8859-1 support
+/iso1dict 8 dict begin
+  /fCourier ISO-8859-1Encoding /Courier reencode_font
+  /fCourier-Bold ISO-8859-1Encoding /Courier-Bold reencode_font
+  /fCourier-BoldOblique ISO-8859-1Encoding /Courier-BoldOblique reencode_font
+  /fCourier-Oblique ISO-8859-1Encoding /Courier-Oblique reencode_font
+  /fHelvetica ISO-8859-1Encoding /Helvetica reencode_font
+  /fHelvetica-Bold ISO-8859-1Encoding /Helvetica-Bold reencode_font
+  /fTimes-Bold ISO-8859-1Encoding /Times-Bold reencode_font
+  /fTimes-Roman ISO-8859-1Encoding /Times-Roman reencode_font
+currentdict end def
+/bgcolor [ 0 0 0 ] def
+/bg false def
+/ul false def
+/bx false def
+% The font for line numbering
+/f# /Helvetica findfont bfs .6 mul scalefont def
+/fSymbol /Symbol findfont def
+/hm fnfs 0.25 mul def
+/pw
+   cw 81.400000 mul
+def
+/ph
+   754.192256 th add
+def
+/pmw urx llx sub pw 2 mul sub 1 div def
+/pmh 0 def
+/v 0 def
+/x [
+  0
+  dup pmw add pw add
+] def
+/y [
+  pmh ph add 0 mul ph add
+  dup
+] def
+/scx sw 2 div def
+/scy sh 2 div def
+/snx urx def
+/sny lly 2 add def
+/dx llx def
+/dy sny def
+/fnx scx def
+/fny dy def
+/lx snx def
+/ly ury fnfs 0.8 mul sub def
+/sx 0 def
+/tab 8 def
+/x0 0 def
+/y0 0 def
+%%EndSetup
+
+%%Page: (1-2) 1
+%%BeginPageSetup
+/pagesave save def
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 2.300369 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(with) K
+( Ecran ,  Lab , Carte ;) p n
+(use) K
+(  Ecran ,  Lab , Carte ;) p n
+() N
+(procedure ) K
+(missionpacman) l
+( is) K n
+(   ) p n
+(   DureeJeu : ) S
+(constant) K
+( Integer := 600; ) p n
+(   ) N
+(   ) S
+(procedure ) K
+(AfficherGameOver) l
+( Is) K n
+(   ) p
+(begin) K n
+(      EffacerEcran;) p n
+(      EcrireEcran\(12,7,") S
+(GAME OVER) str
+("\);) p n
+(      EcrireEcran\(17,10,") S
+(Appuyez sur la touche A) str
+("\);) p n
+(      AttendreToucheA;) N
+(      EffacerEcran;) N
+(   ) S
+(end) K
+( AfficherGameOver ;) p n
+(   ) N
+(   ) S
+(procedure ) K
+(AfficherVictoire) l
+( \(S : ) p
+(in) K
+( Integer \) ) p
+(Is) K n
+(   ) p
+(begin) K n
+(      EffacerEcran;) p n
+(      EcrireEcran\(12,6,") S
+(Victoire !) str
+("\);) p n
+(      EcrireEcran\(12,8,") S
+(Score : ) str
+(" & Integer'Image\(S*4\)\);) p n
+(      EcrireEcran\(17,10,") S
+(Appuyez sur la touche A) str
+("\);) p n
+(      AttendreToucheA;) N
+(      EffacerEcran;) N
+(   ) S
+(end) K
+( AfficherVictoire ;) p n
+(   ) N
+(   ) S
+(procedure ) K
+(AfficherNombreVies) l
+( \(p : ) p
+(in) K
+( T_Pacman ; L : ) p
+(in) K
+( T_Lab\) ) p
+(is) K n
+(   ) p
+(begin) K n
+(      SuspendreTimer ;) p n
+(      EffacerEcran;) N
+(      EcrireEcran\(12,2,") S
+(Plus que) str
+("\);) p n
+(      EcrireEcran\(17,5,Integer'Image\(P.Nbrevies\)&") S
+( vie\(s\)) str
+("\);) p n
+(      EcrireEcran\(17,10,") S
+(Appuyez sur la touche A) str
+("\);) p n
+(      AttendreToucheA;) N
+(      EffacerEcran;) N
+(      DessinerLabyrinthe\(L\);) N
+(      ReprendreTimer ;) N
+(   ) S
+(end) K
+( AfficherNombreVies ;) p n
+(   ) N
+(   ) S
+(function ) K
+(CompterCerise) l
+( \(L : ) p
+(in) K
+( T_Lab\) ) p
+(return) K
+( Integer ) p
+(is) K n
+(      Resultat : Integer := 0 ;) p n
+(   ) S
+(begin) K n
+(      ) p
+(for) K
+( I ) p
+(in) K
+( L'Range\(1\) ) p
+(loop) K n
+() p 8 T ( ) S
+(for) K
+( J ) p
+(in) K
+( L'Range\(2\) ) p
+(loop) K n
+() p 8 T (    ) S
+(if) K
+( L\(I,J\) = Cerise ) p
+(then) K n
+() p 8 T (       Resultat := Resultat +1 ;) N
+() S 8 T (    ) S
+(end) K
+( ) p
+(if) K
+(;) p n
+() S 8 T ( ) S
+(end) K
+( ) p
+(loop) K
+( ;) p n
+(      ) S
+(end) K
+( ) p
+(loop) K
+( ;) p n
+(      ) S
+(return) K
+( Resultat ;) p n
+(   ) S
+(end) K
+( CompterCerise ;) p n
+(   ) N
+(   ) S
+(procedure ) K
+(GererFinPartie) l
+( \(P : ) p
+(out) K
+( T_Pacman ; L : ) p
+(out) K
+( T_Lab\) ) p
+(is) K n
+(   ) p
+(begin) K n
+(       InitialiserJeu\(p,L\); ) p n
+(       Mettreazerotimer ;) N
+(   ) S
+(end) K
+( GererFinPartie ;) p n
+(   ) N
+(   ) S
+(procedure ) K
+(GererContactMur) l
+( \(P : ) p
+(in) K
+( ) p
+(out) K
+( T_Pacman ; L : ) p
+(in) K
+( ) p
+(out) K
+( T_Lab \) ) p
+(is) K n
+(      ) p n
+(   ) S
+(begin) K n
+(      P.NbreVies := P.NbreVies -1 ;) p n
+(      ) S
+(if) K
+( P.NbreVies > 0 ) p
+(then) K n
+() p 8 T ( AfficherNombreVies\(P,L\);) N
+(      ) S
+(end) K
+( ) p
+(if) K
+( ;      ) p n
+(   ) S
+(end) K
+( GererContactMur ;) p n
+(   ) N
+(   ) S
+(procedure ) K
+(GererDeplacement) l
+(\( P : ) p
+(in) K
+( ) p
+(out) K
+( T_Pacman ; L : ) p
+(in) K
+( ) p
+(out) K
+( T_Lab ; D : ) p
+(in) K
+( T_) p n
+(Direction ; NbrC : ) S
+(in) K
+( ) p
+(out) K
+( Integer \) ) p
+(is) K n
+(   ) p
+(begin) K n
+(      DessinerBloc\(P.PosX,P.PosY,Vide\);) p n
+(      L\(P.PosX,P.PosY\):=Vide;) N
+(      ) S
+(case) K
+( D ) p
+(is) K n
+() p 8 T ( ) S
+(when) K
+( Sud =>) p n
+() S 8 T (    P := \(P.PosX,P.PosY+1,P.NbreVies\);) N
+() S 8 T ( ) S
+(when) K
+( Nord => ) p n
+() S 8 T (    P := \(P.PosX,P.PosY-1,P.NbreVies\);) N
+() S 8 T ( ) S
+(when) K
+( Est =>) p n
+() S 8 T (    P := \(P.PosX+1,P.PosY,P.NbreVies\);) N
+() S 8 T ( ) S
+(when) K
+( Ouest =>) p n
+() S 8 T (    P := \(P.PosX-1,P.PosY,P.NbreVies\);) N
+() S 8 T ( ) S
+(when) K
+( ) p
+(others) K
+( =>) p n
+() S 8 T (    ) S
+(null) K
+(;) p n
+(      ) S
+(end) K
+( ) p
+(case) K
+( ;) p n
+(      ) S
+(if) K
+(  L\(P.PosX,P.PosY\) = Cerise ) p
+(then) K n
+() p 8 T ( NbrC := NbrC +1 ;) N
+(      ) S
+(end) K
+( ) p
+(if) K
+(;) p n
+(      L\(P.PosX,P.PosY\):=Pacman;) N
+(      DessinerBloc\(P.PosX,P.PosY,Pacman, D\); ) N
+(   ) S
+(end) K
+( GererDeplacement ;) p n
+(   ) N
+(   ) S
+(procedure ) K
+(AfficherTemps) l
+( is) K n
+(   ) p
+(begin) K n
+(      EcrireEcran\(32,4,") p
+(Decompte) str
+("\);) p n
+(--      if Float\(DureeJeu-GetTempsEcoule\) < 0.2 * Float\(DureeJeu\) then) c n
+(--) S 8 T ( Insa.Graphics.SetTextColor\(Red\);) N
+(--      end if;) N
+(      EcrireEcran\(35,6,integer'Image\(DureeJeu-GetTempsEcoule\) & ") p
+(  ) str
+("\);) p n
+(   ) S
+(end) K
+( AfficherTemps;) p n
+(   ) N
+(   ) S
+(function ) K
+(TesterMur) l
+( \(D: T_Direction ; L : T_Lab ; P : T_Pacman \) ) p
+(return) K
+( Boolean) p n
+( ) S
+(is) K n
+(      CestMur : Boolean := False ;) p n
+(   ) S
+(begin) K n
+(      ) p
+(if) K
+( \(D = Sud ) p
+(and) K
+( L\(P.PosX,P.PosY+1\) = Mur\) ) p
+(or) K n
+() p 8 T (\(D = Nord ) S
+(and) K
+( L\(P.PosX,P.PosY-1\) = Mur\) ) p
+(or) K n
+() p 8 T (\(D = Ouest ) S
+(and) K
+( L\(P.PosX-1,P.PosY\) = Mur\) ) p
+(or) K n
+() p 8 T (\(D = Est ) S
+(and) K
+(  L\(P.PosX+1,P.PosY\) = Mur\) ) p
+(then) K n
+() p 8 T ( CestMur := True ;) N
+(      ) S
+(end) K
+( ) p
+(if) K
+(;) p n
+(      ) S
+(return) K
+(  CestMur ;) p n
+(   ) S
+(end) K
+( TesterMur ;) p n
+(   ) N
+(   ) N
+(   Mon_Lab : T_Lab ;) N
+(   Mon_PacMan : T_Pacman ;) N
+(   Ma_Direction : T_Direction ;) N
+(   Mon_Nbre_Cerises_Mangees,Mon_Nbre_Cerises_Depart : Integer := 0 ;) N
+(   ) N
+(begin) K n
+(   Lab.InitialiserJeu\(Mon_PacMan,Mon_Lab\);) p n
+(   Carte.InitialiserCarte ;) N
+(   Mon_Nbre_Cerises_Depart := CompterCerise\(Mon_Lab\);) N
+(   ) S
+(while) K
+( True ) p
+(loop) K n
+(      ) p
+(while) K
+( \(getTempsEcoule <= DureeJeu\) ) p
+(and) K
+( \(Mon_Nbre_Cerises_Mangees < Mon_Nbr) p n
+(e_Cerises_Depart\) ) S
+(and) K
+(  \(Mon_PacMan.NbreVies > 0\) ) p
+(loop) K n
+() p 8 T ( AfficherTemps ;) S 32 T ( ) N
+() S 8 T ( Ma_Direction := Carte.DetecterDirection ;) N
+() S 8 T ( ) S
+(if) K
+( TesterMur\(Ma_Direction,Mon_Lab,Mon_PacMan\) ) p
+(then) K n
+() p 8 T (    GererContactMur\(Mon_PacMan,Mon_Lab\);) N
+() S 8 T ( ) S
+(elsif) K
+( Ma_Direction /= Immobile ) p
+(then) K n
+() p 8 T (    GererDeplacement\(Mon_PacMan,Mon_Lab,Ma_Direction,Mon_Nbre_Cerises_Ma) N
+(ngees\);) N
+() S 8 T ( ) S
+(end) K
+( ) p
+(if) K
+(;) p n
+(      ) S
+(end) K
+( ) p
+(loop) K
+(;) p n
+(      ) S
+(if) K
+( \(getTempsEcoule > DureeJeu\) ) p
+(or) K
+( \(Mon_PacMan.NbreVies <= 0\) ) p
+(then) K n
+() p 8 T ( AfficherGameOver ;) N
+(missionpacman.adb) (Page 1/2) (d\303\251c. 19, 16 14:26) title
+border
+/v 1 store
+/x0 x v get 2.300369 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(      ) p
+(else) K n
+() p 8 T ( AfficherVictoire\(DureeJeu - getTempsEcoule\) ; ) N
+(      ) S
+(end) K
+( ) p
+(if) K
+(;) p n
+(      GererFinPartie\(Mon_PacMan,Mon_Lab\);) N
+(      Mon_Nbre_Cerises_Depart := CompterCerise\(Mon_Lab\);) N
+(      Mon_Nbre_Cerises_Mangees := 0 ;) N
+(   ) S
+(end) K
+( ) p
+(loop) K
+( ;) p n
+(   ) N
+(end) K
+( Missionpacman ;) p n
+( ) N
+(missionpacman.adb) (Page 2/2) (d\303\251c. 19, 16 14:26) title
+border
+grestore
+(Printed by S\303\251bastien DI MERCURIO) rhead
+() (1/4) (lundi janvier 16, 2017) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 2
+%%BeginPageSetup
+/pagesave save def
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 2.300369 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(pragma) K
+( Ada_95;) p n
+() N
+(package ) K
+(carte) L
+( is) K n
+(   ) p n
+(   ) S
+(type) K
+( T_Direction ) p
+(is) K
+( \(Nord,Sud,Est,Ouest,Immobile\) ;) p n
+(   ) N
+(   ) S
+(-- fonction devant etre appelee imperativement au debut de votre programme) c n
+(   ) p
+(procedure ) K
+(InitialiserCarte ) l
+(;) p n
+(   ) N
+(   ) S
+(-- retourne un entier qui represente le nombre de 100ms) c n
+(   ) p
+(-- ecoulees depuis l'appel de la procedure InitialiserCarte) c n
+(   ) p
+(function ) K
+(GetTempsEcoule) l
+( return) K
+( Integer ;) p n
+(   ) N
+(   ) S
+(-- fige le temps !!!) c n
+(   ) p
+(procedure ) K
+(SuspendreTimer  ) l
+(;) p n
+(   ) N
+(   ) S
+(-- "defige" le temps !!!) c n
+(   ) p
+(procedure ) K
+(ReprendreTimer  ) l
+(;) p n
+(   ) N
+(   ) S
+(-- redemarre le temps \303\240 partir de '0') c n
+(   ) p
+(procedure ) K
+(MettreAZeroTimer ) l
+(;) p n
+(   ) N
+(   ) S
+(-- attend un appui sur la touche A) c n
+(   ) p
+(procedure ) K
+(AttendreToucheA ) l
+(;) p n
+(   ) N
+(   ) S
+(-- renvoie la derniere touche de direction appuyee de type T_Direction) c n
+(   ) p
+(function ) K
+( DetecterDirection) l
+( return) K
+( T_Direction ;) p n
+(  ) N
+(end) K
+( carte ;) p n
+(carte.ads) (Page 1/1) (d\303\251c. 08, 16 11:25) title
+border
+grestore
+(Printed by S\303\251bastien DI MERCURIO) rhead
+() (lundi janvier 16, 2017) (2/4) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 3
+%%BeginPageSetup
+/pagesave save def
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 2.300369 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(with) K
+( Insa , Insa.Graphics  ;) p n
+(use) K
+(  Insa , Insa.Graphics  ;) p n
+() N
+(package ) K
+(Ecran) L
+( is) K n
+(   ) p n
+(   ) S
+(-- Efface un ecran et fixe un fond bleu fonce) c n
+(   ) p
+(procedure ) K
+(EffacerEcran ) l
+(;) p n
+(   ) N
+(   ) S
+(-- Ecrit la chaine S en blan sur fond bleu fonce) c n
+(   ) p
+(-- avec le 1er caractere a la colonne C et ligne L) c n
+(   ) p
+(-- C appartient a [0..39] et L appartient a [0..14]) c n
+(   ) p
+(procedure ) K
+(EcrireEcran) l
+( \(C : ) p
+(in) K
+( Integer;L : ) p
+(in) K
+( Integer;S : ) p
+(in) K
+( String\) ;) p n
+(   ) N
+(end) K
+( Ecran;) p n
+(ecran.ads) (Page 1/1) (d\303\251c. 08, 16 11:25) title
+border
+grestore
+(Printed by S\303\251bastien DI MERCURIO) rhead
+() (3/4) (lundi janvier 16, 2017) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (1) 4
+%%BeginPageSetup
+/pagesave save def
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 2.300369 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(pragma) K
+( Ada_95;) p n
+() N
+(with) K
+( Carte;) p n
+(use) K
+( Carte;) p n
+() N
+(package ) K
+(Lab) L
+( is) K n
+(   ) p n
+(   MaxNbreVies : ) S
+(constant) K
+( Integer := 4 ;) p n
+(   ) N
+(   ) S
+(type) K
+( T_Bloc ) p
+(is) K
+( \(Mur,Vide,Pacman,Cerise\) ;) p n
+(  ) N
+(   ) S
+(type) K
+( T_Lab ) p
+(is) K
+( ) p
+(array) K
+( \(1..10,1..10\) ) p
+(of) K
+( T_Bloc ;) p n
+(   ) N
+(   ) S
+(type) K
+( T_Pacman ) p
+(is) K
+( ) p
+(record) K n
+(      PosX :     Integer ;) p n
+(      PosY :     Integer ;) N
+(      NbreVies : Integer ;) N
+(   ) S
+(end) K
+( ) p
+(record) K
+( ;   ) p n
+(   ) N
+(   Invalid_Bloc: ) S
+(exception) K
+(;) p n
+(   ) N
+(   ) S
+(-- Efface l'ecran, genere et dessine un labyrinthe) c n
+(   ) p
+(-- Positionne Pacman avec MaxNbreVies vies au milieu du labyrinthe) c n
+(   ) p
+(procedure ) K
+(InitialiserJeu) l
+( \(P : ) p
+(out) K
+( T_Pacman ; L : ) p
+(out) K
+( T_Lab\)  ;) p n
+(   ) N
+(   ) S
+(-- Retourne une variable de type T_Lab initialisee avec un labyrinthe) c n
+(   ) p
+(-- dans lequel un T_Pacman P est place ) c n
+(   ) p
+(function ) K
+(GenererLabyrinthe) l
+(\(P : T_Pacman\) ) p
+(return) K
+( T_Lab ;) p n
+(   ) N
+(   ) S
+(-- Dessine a la Ieme ligne Jeme colonne du labyrinthe un T_Bloc defini par Ty) c n
+(peBloc) N
+(   ) p
+(procedure ) K
+(DessinerBloc) l
+( \(I,J : Integer ; TypeBloc : T_Bloc\) ;) p n
+(   ) N
+(   ) S
+(-- Dessine a la Ieme ligne Jeme colonne du labyrinthe un bloc pacman \(Pacman_) c n
+(Haut, Pacman_Droit, Pacman_Gauche, Pacman_Bas\) ) N
+(   ) p
+(-- en fonction de la direction.) c n
+(   ) p
+(-- Si le bloc n'est pas un bloc pacman, une exception Invalid_Bloc est lev\303\251e) c n
+(   ) p
+(procedure ) K
+(DessinerBloc) l
+( \(I,J : Integer ; TypeBloc : T_Bloc; Direction: T_Directi) p n
+(on \);) N
+(   ) N
+(   ) S
+(-- Dessine un labyrinthe T_Lab defini par L) c n
+(   ) p
+(procedure ) K
+(DessinerLabyrinthe) l
+( \(L : T_Lab\) ;) p n
+(   ) N
+(end) K
+( Lab;) p n
+() N
+() N
+() N
+(lab.ads) (Page 1/1) (d\303\251c. 19, 16 14:26) title
+border
+grestore
+(Printed by S\303\251bastien DI MERCURIO) rhead
+() (lundi janvier 16, 2017) (4/4) footer
+end % of iso1dict
+pagesave restore
+showpage
+
+%%Trailer
+end
+%%EOF

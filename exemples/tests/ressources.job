@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ressources>
+  <file language="ada">ressources</file> 
+
+  <image id="INSA_2016" color="8bpp" packed="true">./ressources/INSA_2016.bmp</image>
+  <image id="pacman_Gauche" color="8bpp" packed="true">./ressources/Pacman_Gauche.bmp</image>
+  
+</ressources>
+

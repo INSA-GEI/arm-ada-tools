@@ -1,0 +1,12 @@
+/home/dimercur/Travail/git/arm-ada-git/tools/adashell/bin/Debug/adashell.exe
+/home/dimercur/Travail/git/arm-ada-git/tools/adashell/bin/Debug/adashell.pdb
+/home/dimercur/Travail/git/arm-ada-git/tools/adashell/obj/x86/Debug/adashell.csprojResolveAssemblyReference.cache
+/home/dimercur/Travail/git/arm-ada-git/tools/adashell/obj/x86/Debug/adashell.csproj.CoreCompileInputs.cache
+/home/dimercur/Travail/git/arm-ada-git/tools/adashell/obj/x86/Debug/adashell.exe
+/home/dimercur/Travail/git/arm-ada-git/tools/adashell/obj/x86/Debug/adashell.pdb
+/home/dimercur/Travail/git/arm-ada/tools/adashell/bin/Debug/adashell.exe
+/home/dimercur/Travail/git/arm-ada/tools/adashell/bin/Debug/adashell.pdb
+/home/dimercur/Travail/git/arm-ada/tools/adashell/obj/x86/Debug/adashell.csprojResolveAssemblyReference.cache
+/home/dimercur/Travail/git/arm-ada/tools/adashell/obj/x86/Debug/adashell.csproj.CoreCompileInputs.cache
+/home/dimercur/Travail/git/arm-ada/tools/adashell/obj/x86/Debug/adashell.exe
+/home/dimercur/Travail/git/arm-ada/tools/adashell/obj/x86/Debug/adashell.pdb

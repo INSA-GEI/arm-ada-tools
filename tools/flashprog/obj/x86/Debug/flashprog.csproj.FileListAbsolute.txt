@@ -1,0 +1,10 @@
+/home/dimercur/Travail/git/arm-ada-git/tools/flashprog/bin/Debug/flashprog.exe
+/home/dimercur/Travail/git/arm-ada-git/tools/flashprog/bin/Debug/flashprog.pdb
+/home/dimercur/Travail/git/arm-ada-git/tools/flashprog/obj/x86/Debug/flashprog.csproj.CoreCompileInputs.cache
+/home/dimercur/Travail/git/arm-ada-git/tools/flashprog/obj/x86/Debug/flashprog.exe
+/home/dimercur/Travail/git/arm-ada-git/tools/flashprog/obj/x86/Debug/flashprog.pdb
+/home/dimercur/Travail/git/arm-ada/tools/flashprog/bin/Debug/flashprog.exe
+/home/dimercur/Travail/git/arm-ada/tools/flashprog/bin/Debug/flashprog.pdb
+/home/dimercur/Travail/git/arm-ada/tools/flashprog/obj/x86/Debug/flashprog.csproj.CoreCompileInputs.cache
+/home/dimercur/Travail/git/arm-ada/tools/flashprog/obj/x86/Debug/flashprog.exe
+/home/dimercur/Travail/git/arm-ada/tools/flashprog/obj/x86/Debug/flashprog.pdb

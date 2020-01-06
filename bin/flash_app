@@ -1,0 +1,4 @@
+#!/bin/sh
+
+JLinkExe -device STM32F746NG -CommanderScript flash_app.jlink
+

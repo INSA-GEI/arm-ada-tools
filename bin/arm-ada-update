@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Telecharge la derniere version de l'OS
+mkdir ~/.arm-ada-update.tmp
+cd ~/.arm-ada-update.tmp
+
+wget http://intranet-gei.insa-toulouse.fr/~dimercur/depot/firmware_LATEST.hex.xz
+
+# Decompresse l'archive
+xz -vd firmware_LATEST.hex.xz
+
+# Telecharge l'OS
+flashprog firmware_LATEST.hex
+
+# Clean up
+cd ~
+rm -rf ~/.arm-ada-update.tmp
+
+echo Done

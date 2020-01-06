@@ -1,0 +1,8 @@
+with Simon ;
+use Simon ;
+
+procedure missionsimon is
+   	   
+begin
+   null;
+end missionsimon ;

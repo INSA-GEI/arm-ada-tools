@@ -1,0 +1,22 @@
+﻿<Properties StartupConfiguration="{9CB57DAD-3B7B-4C8C-9EAB-BF41C0E0F691}|Default" StartupItem="rca.csproj">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MidiConvertion.cs">
+    <Files>
+      <File FileName="MidiWriter.cs" Line="104" Column="1" />
+      <File FileName="MidiFile.cs" Line="1" Column="1" />
+      <File FileName="MidiLoader.cs" Line="1" Column="1" />
+      <File FileName="MidiConvertion.cs" Line="39" Column="1" />
+      <File FileName="Program.cs" Line="1" Column="1" />
+      <File FileName="../../exemples/synthetizer/ressources.job" Line="129" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/dimercur/Travail/git/arm-ada/tools/rca/MidiConvertion.cs" line="39" column="1" />
+      <Breakpoint file="/home/dimercur/Travail/git/arm-ada/tools/rca/MidiConvertion.cs" line="57" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.rca PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

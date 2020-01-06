@@ -1,0 +1,71 @@
+#!/bin/bash
+
+echo "arm-ada-setup v3"
+echo "Mise a jour du path dans .bashrc"
+fichier=~/.bashrc
+
+if [ ! -f "$fichier" ]; then
+    touch "$fichier"
+fi
+
+var1=$(cat $fichier | grep "~/arm-ada")
+
+if [ "$var1" = "" ]; then
+    echo " " >> "$fichier"
+    echo "var1=\$(echo \$PATH | grep \"~/arm-ada\")"  >> "$fichier"
+    echo " " >> "$fichier"
+    echo "if [ \"\$var1\" = \"\" ]; then" >> "$fichier"
+    echo "   PATH=~/arm-ada/bin:/usr/local/insa/arm-ada/compilateur/gcc-arm-none-eabi/bin:\$PATH"  >> "$fichier"
+    echo "fi" >> "$fichier"
+	
+    echo "$fichier mis à jour"
+else
+    echo "$fichier déjà à jour"
+fi
+
+echo ""
+echo "Recopie du repertoire support aux TP dans ~/arm-ada"
+
+if [ -e ~/arm-ada ]; then
+    echo "Le repertoire ~/arm-ada existe"
+    echo -n "Le script est sur le point de le remplacer (y compris les TP). Voulez-vous continuer ? [y/N] "
+
+    if read -t 60 response; then
+		if [ "$response" = "Y" -o "$response" = "y" ]; then
+	    	today=`date '+%Y_%m_%d__%H_%M_%S'`
+	    	filename=".bak_$today"
+	    	cd ~/arm-ada
+	   		mkdir $filename
+	   		mv TP $filename/
+
+	    	rm -rf TP scripts lib firmware exemples bin
+
+		else exit 1;    
+		fi
+    else exit 1;
+    fi
+fi
+
+cd ~
+tar Jxf /home/commetud/2eme\ Annee\ IMACS/ADA/arm-ada_home*.tar.xz
+
+cd ~/arm-ada
+
+if [ -e "$filename" ]; then
+	echo ""
+	echo "Recopie du travail déjà accompli"
+
+	cp -v $filename/TP/TP1/missionpacman.adb TP/TP1/
+	cp -v $filename/TP/TP2/simon/missionSimon.adb TP/TP2/simon
+	cp -v $filename/TP/TP3/dicho/dicho.adb TP/TP3/dicho
+	cp -v $filename/TP/TP3/koch/koch.adb TP/TP3/koch
+	cp -v $filename/TP/TP4/magneto/calib.adb TP/TP4/magneto
+	cp -v $filename/TP/TP4/snake/snake.adb TP/TP4/snake
+fi
+
+echo ""
+echo "Fini"
+
+
+
+

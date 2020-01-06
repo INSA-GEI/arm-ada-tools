@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "gdb",
+      "request": "launch",
+      "name": "Debug missionsimon",
+      "target": "./application.elf",
+      "executable": "./application.elf",
+      "cwd": "${workspaceRoot}",
+      "autorun": [
+        "source ./.gdbinit",
+        "load application.elf",
+        "tbreak _ada_missionsimon",
+        "monitor halt",
+        "monitor reset",
+        "continue"
+      ],
+      "preLaunchTask":"Start gdbserver",
+      "postDebugTask": "",
+      //"postDebugTask":"Kill gdbserver"
+    }
+  ]
+}

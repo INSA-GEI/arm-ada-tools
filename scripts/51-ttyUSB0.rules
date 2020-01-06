@@ -1,0 +1,6 @@
+# serial
+# this is the general rule that covers ttyUSB0 among others
+KERNEL=="tty[A-Z]*[0-9]|pppox[0-9]*|ircomm[0-9]*|noz[0-9]*|rfcomm[0-9]*", GROUP="uucp"
+
+# relax the permissions just for ttyUSB0
+KERNEL=="ttyUSB0",              MODE="0666"

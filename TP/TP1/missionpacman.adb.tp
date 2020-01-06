@@ -1,0 +1,9 @@
+with Ecran ,  Lab , Carte ;
+use  Ecran ,  Lab , Carte ;
+
+procedure missionpacman is
+   
+begin
+   null ;
+end missionpacman ;
+ 

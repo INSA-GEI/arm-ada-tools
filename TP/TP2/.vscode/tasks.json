@@ -1,0 +1,111 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Clean",
+      "type": "shell",
+      "command": "make clean",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "make",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build for new GameBoy",
+      "type": "shell",
+      "command": "make new",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Download",
+      "type": "shell",
+      "command": "make install",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Download to new GameBoy",
+      "type": "shell",
+      "command": "make install-new",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start gdbserver",
+      "type": "shell",
+      "command": "JLinkGDBServer -device STM32F746NG -If SWD -Speed 4000",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": [{
+          "regexp": ".",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        }],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^SEGGER.*$",
+          "endsPattern": "^Waiting for GDB connection.*$"
+        },
+      },
+    },
+    {
+      "label": "Kill gdbserver",
+      "type": "shell",
+      "command": "killall JLinkGDBServer && killall JLinkGDBServer",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ressources>
+  <file language="ada">sprites</file> 
+
+  <image id="Cerise" color="8bpp" packed="true">./sprites/Cerise.bmp</image>
+  <image id="Pacman_Gauche" color="8bpp" packed="true">./sprites/Pacman_Gauche.bmp</image>
+  <image id="Pacman_Droit" color="8bpp" packed="true">./sprites/Pacman_Droit.bmp</image>
+  <image id="Pacman_Haut" color="8bpp" packed="true">./sprites/Pacman_Haut.bmp</image>
+  <image id="Pacman_Bas" color="8bpp" packed="true">./sprites/Pacman_Bas.bmp</image>
+  <image id="Mur" color="8bpp" packed="true">./sprites/mur2.bmp</image>
+</ressources>
+

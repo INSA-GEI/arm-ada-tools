@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ressources>
+  <file language="ada">ressources</file> 
+
+  <image id="Bloc_Bleu" color="8bpp" packed="true">./ressources/Bleu.bmp</image>
+  <image id="Bloc_Cyan" color="8bpp" packed="true">./ressources/Cyan.bmp</image>
+  <image id="Bloc_Gris" color="8bpp" packed="true">./ressources/Gris.bmp</image>
+  <image id="Bloc_Jaune" color="8bpp" packed="true">./ressources/Jaune.bmp</image>
+  <image id="Bloc_Orange" color="8bpp" packed="true">./ressources/Orange.bmp</image>
+  <image id="Bloc_Rouge" color="8bpp" packed="true">./ressources/Rouge.bmp</image>
+  <image id="Bloc_Vert" color="8bpp" packed="true">./ressources/Vert.bmp</image>
+  <image id="Bloc_Violet" color="8bpp" packed="true">./ressources/Violet.bmp</image>
+
+  <image id="Mur_Horizontal" color="8bpp" packed="true">./ressources/Mur-Horizontal.bmp</image>
+  <image id="Mur_Vertical" color="8bpp" packed="true">./ressources/Mur-vertical.bmp</image>
+  <image id="Mur_Coin_1" color="8bpp" packed="true">./ressources/Mur-Coude-1.bmp</image>
+  <image id="Mur_Coin_2" color="8bpp" packed="true">./ressources/Mur-Coude-2.bmp</image>
+  <image id="Mur_Coin_3" color="8bpp" packed="true">./ressources/Mur-Coude-3.bmp</image>
+  <image id="Mur_Coin_4" color="8bpp" packed="true">./ressources/Mur-Coude-4.bmp</image>
+
+  <image id="TitleScreen" color="8bpp" packed="true">./ressources/tetriswhat.jpg</image>
+  
+<!-- Permet de definir une table d'onde personnalisée
+		 attention: 57 elements: si moins => remplissage avec 0</value> si plus: tronquature -->
+	<wavetable id="Sqr">		
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>255</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+    <value>0</value>
+	</wavetable>
+
+	<instrument id="Guitar"> 
+		<wave>Sqr</wave>        <!-- La table d'onde utilisée -->
+		<attack>10</attack>			<!-- La duree de l'attaque</value> en milliseconde (virgule flottante) -->
+		<hold>0</hold>					<!-- La duree du maintien de l'attaque</value> en milliseconde (virgule flottante) -->
+		<decay>5</decay>				<!-- La duree de la decroissance de l'attaque</value> en milliseconde (virgule flottante) -->
+		<sustain level="50">400</sustain>	<!-- La duree du maintien</value> en milliseconde (virgule flottante) 
+											 Le parametre level indique la valeur (de 0 à 100%) a atteindre aprés la decroissance -->
+		<release>100</release>				<!-- La duree du retrait</value> en milliseconde (virgule flottante) -->
+	</instrument>
+
+	<melody id="intro">
+		<channel instrument="Guitar" volume="100">0</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">1</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">2</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">3</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<midi>./ressources/title-screen.mid</midi>		<!-- La melodie à proprement parler --> 
+	</melody>
+
+  <melody id="themeA">
+		<channel instrument="Guitar" volume="100">0</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">1</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">2</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">3</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<midi>./ressources/tetris.mid</midi>		<!-- La melodie à proprement parler --> 
+	</melody>
+
+  <melody id="gameover_music">
+		<channel instrument="Guitar" volume="100">0</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">1</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">2</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<channel instrument="Guitar" volume="100">3</channel>	<!-- parametres à appliquer au canal x: volume => volume (in %) et instrument=> l'instrument à utiliser --> 
+		<midi>./ressources/game-over.mid</midi>		<!-- La melodie à proprement parler --> 
+	</melody>
+</ressources>
+
