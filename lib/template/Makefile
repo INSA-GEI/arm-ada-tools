@@ -18,6 +18,7 @@ RESSOURCES_NAME = sprites
 #############################################################################################################################
 
 ARM_ADA_COMPILER_PATH = /usr/local/insa/arm-ada
+STLINK_PROGRAMMER_PATH = /usr/local/insa/STM32Cube/STM32CubeProgrammer/bin
 ARM_ADA_PATH = $(HOME)/arm-ada
 
 LIBGNAT_PATH = $(ARM_ADA_COMPILER_PATH)/compilateur/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/fpv4-sp/hard/adalib
@@ -71,10 +72,10 @@ solution:
 	flashprog solution.hex
 
 install-new:
-	JLinkExe -device STM32F746NG -CommanderScript flash_app.jlink
+	$(STLINK_PROGRAMMER_PATH)/STM32_Programmer_CLI -c port=SWD -d $(PROJECT_NAME_NEW).hex -rst
 
 solution-new:
-	JLinkExe -device STM32F746NG -CommanderScript flash_solution.jlink
+	$(STLINK_PROGRAMMER_PATH)/STM32_Programmer_CLI -c port=SWD -d solution-new.hex -rst
 
 doc:
 	a2ps -R -o doc.ps carte.ads ecran.ads lab.ads
@@ -88,6 +89,6 @@ endif
 
 export:
 	mv $(PROJECT_NAME).hex solution.hex
-	mv $(PROJECT_NAME_NEW).bin solution.bin
-	rm -f carte.adb lab.adb ecran.adb $(PROJECT_NAME).o $(PROJECT_NAME).ali b~* $(TARGET) $(PROJECT_NAME).hex ada-program.map *.log
+	mv $(PROJECT_NAME_NEW).hex solution-new.hex
+	rm -f carte.adb lab.adb ecran.adb $(PROJECT_NAME).o $(PROJECT_NAME).ali b~* $(TARGET) $(PROJECT_NAME_NEW).hex $(PROJECT_NAME).hex ada-program.map *.log
 	mv $(PROJECT_NAME).adb.tp $(PROJECT_NAME).adb

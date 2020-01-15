@@ -18,7 +18,7 @@ RESSOURCES_NAME = ressources
 #############################################################################################################################
 
 ARM_ADA_COMPILER_PATH = /usr/local/insa/arm-ada
-STLINK_PROGRAMMER_PATH = /usr/local/insa/STM32CubeProgrammer/bin
+STLINK_PROGRAMMER_PATH = /usr/local/insa/STM32Cube/STM32CubeProgrammer/bin
 ARM_ADA_PATH = $(HOME)/arm-ada
 
 LIBGNAT_PATH = $(ARM_ADA_COMPILER_PATH)/compilateur/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/fpv4-sp/hard/adalib
