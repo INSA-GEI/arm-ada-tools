@@ -90,7 +90,7 @@
     {
       "label": "Start gdbserver",
       "type": "shell",
-      "command": "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/dimercur/arm-ada/bin/native/linux_x64;~/arm-ada/bin/ST-LINK_gdbserver -cp /usr/local/insa/STM32Cube/STM32CubeProgrammer/bin -d",
+      "command": "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/arm-ada/bin/native/linux_x64;~/arm-ada/bin/ST-LINK_gdbserver -cp /usr/local/insa/STM32Cube/STM32CubeProgrammer/bin -d",
       "isBackground": true,
       "presentation": {
         "reveal": "always",
