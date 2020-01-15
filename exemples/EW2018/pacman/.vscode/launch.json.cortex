@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "cortex-debug",
+          "request": "launch",
+          "servertype": "jlink",
+          "cwd": "${workspaceRoot}",
+          "executable": "./application.elf",
+          "name": "Debug (J-Link)",
+          "device": "STM32F746NG",
+          "interface": "swd",
+          "ipAddress": null,
+      }
+  ]
+}

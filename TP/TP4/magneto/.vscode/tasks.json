@@ -18,6 +18,20 @@
       "problemMatcher": []
     },
     {
+      "label": "Generate ressources",
+      "type": "shell",
+      "command": "make ressources",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Build",
       "type": "shell",
       "command": "make",
@@ -32,7 +46,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Build for new GameBoy",
+      "label": "Build (new console)",
       "type": "shell",
       "command": "make new",
       "group": {
@@ -60,7 +74,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Download to new GameBoy",
+      "label": "Download (new console)",
       "type": "shell",
       "command": "make install-new",
       "group": {
