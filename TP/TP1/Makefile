@@ -25,7 +25,7 @@ LIBGNAT_PATH = $(ARM_ADA_COMPILER_PATH)/compilateur/gcc-arm-none-eabi/lib/gcc/ar
 LIBWRAPPER_PATH = $(ARM_ADA_PATH)/lib/wrapper/lib
 LIBINSA_PATH =  $(ARM_ADA_PATH)/lib/lib-ada
 
-OPTIONS = -gdwarf-2 -O0 --function-sections -march=armv7e-m -mthumb -mthumb-interwork -mfloat-abi=hard -mfpu=fpv4-sp-d16
+OPTIONS = -g -O0 --function-sections -march=armv7e-m -mthumb -mthumb-interwork -mfloat-abi=hard -mfpu=fpv4-sp-d16
 
 .PHONY: all clean install ressources doc export solution
 
@@ -59,8 +59,8 @@ $(TARGET): $(DEP_ADA) $(DEP_ALI) $(DEP_ASM) $(DEP_C) $(ARM_ADA_PATH)/lib/linker-
 
 $(TARGET_NEW): $(DEP_ADA) $(DEP_ALI) $(DEP_ASM) $(DEP_C) $(ARM_ADA_PATH)/lib/linker-script-arm-ada-new.ld 
 	arm-none-eabi-gnatbind -I$(LIBINSA_PATH) -x $(PROJECT_NAME).ali
-	arm-none-eabi-gcc -gdwarf-2 $(OPTIONS) -I$(LIBINSA_PATH) -I$(LIBWRAPPER_PATH) -o b~$(PROJECT_NAME).o -c b~$(PROJECT_NAME).adb
-	arm-none-eabi-gcc -gdwarf-2 -march=armv7e-m -mthumb -mthumb-interwork -mfloat-abi=hard -mfpu=fpv4-sp-d16 -Wl,-Map="ada-program.map" -Wl,--gc-section -T $(ARM_ADA_PATH)/lib/linker-script-arm-ada-new.ld -o $(TARGET_NEW) *.o $(LIBWRAPPER_PATH)/retarget.o -nostartfiles -nodefaultlibs -L $(LIBWRAPPER_PATH) -L $(LIBINSA_PATH) -L $(LIBGNAT_PATH) -lgnat -lc -ladainsa -lwrapper
+	arm-none-eabi-gcc -g $(OPTIONS) -I$(LIBINSA_PATH) -I$(LIBWRAPPER_PATH) -o b~$(PROJECT_NAME).o -c b~$(PROJECT_NAME).adb
+	arm-none-eabi-gcc -g -march=armv7e-m -mthumb -mthumb-interwork -mfloat-abi=hard -mfpu=fpv4-sp-d16 -Wl,-Map="ada-program.map" -Wl,--gc-section -T $(ARM_ADA_PATH)/lib/linker-script-arm-ada-new.ld -o $(TARGET_NEW) *.o $(LIBWRAPPER_PATH)/retarget.o -nostartfiles -nodefaultlibs -L $(LIBWRAPPER_PATH) -L $(LIBINSA_PATH) -L $(LIBGNAT_PATH) -lgnat -lc -ladainsa -lwrapper
 
 clean:
 	rm -f  $(PROJECT_NAME).o $(PROJECT_NAME).ali b~* $(TARGET) $(TARGET_NEW) $(PROJECT_NAME).hex $(PROJECT_NAME_NEW).hex ada-program.map *.log

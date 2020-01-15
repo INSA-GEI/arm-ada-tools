@@ -2,23 +2,27 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "gdb",
-      "request": "launch",
       "name": "Debug missionsimon",
-      "target": "./application.elf",
-      "executable": "./application.elf",
-      "cwd": "${workspaceRoot}",
-      "autorun": [
-        "source ./.gdbinit",
-        "load application.elf",
-        "tbreak _ada_missionsimon",
-        "monitor halt",
-        "monitor reset",
-        "continue"
-      ],
-      "preLaunchTask":"Start gdbserver",
-      "postDebugTask": "",
-      //"postDebugTask":"Kill gdbserver"
+      "type": "cppdbg",
+      "request": "launch",
+      "preLaunchTask": "Start gdbserver",
+      "postDebugTask": "Kill gdbserver",
+      "program": "${workspaceFolder}/application.elf",
+      "args": [],
+      "stopAtEntry": false,
+      //"customLaunchSetupCommands": [],
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "miDebuggerServerAddress": "localhost:61234",
+      "miDebuggerPath": "arm-none-eabi-gdb",
+      "setupCommands": [],
+      "logging": {
+        "trace": false,
+        "traceResponse": false,
+        "engineLogging": false
+      }
     }
   ]
 }
