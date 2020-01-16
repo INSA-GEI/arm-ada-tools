@@ -6,8 +6,8 @@ response=""
 echo -n "Voulez vous mettre a jour la version de l'archive ? [y/N] : "
 if read -t 15 response; then
     if [ "$response" = "Y" -o "$response" = "y" ]; then
-	nano version.txt
-	nano version_os.txt
+        nano version.txt
+        nano version_os.txt
     fi
 fi
 
@@ -18,8 +18,8 @@ if [ -n "$version" ]
 then
     if [ "$version" = "" ]
     then echo version.txt vide
-	 exit 1
-   fi
+        exit 1
+    fi
 else
     echo version.txt vide
     exit 2
@@ -29,8 +29,8 @@ if [ -n "$version_os" ]
 then
     if [ "$version_os" = "" ]
     then echo version_os.txt vide
-	 exit 1
-   fi
+        exit 1
+    fi
 else
     echo version_os.txt vide
     exit 2
@@ -56,6 +56,7 @@ cd ../export
 
 echo " Copie des outils"
 mkdir -v ./arm-ada/bin
+cp -r ../bin/* ./arm-ada/bin
 cp -v ../tools/adashell/bin/Debug/adashell.exe ./arm-ada/bin/adashell
 cp -v ../tools/flashprog/bin/Debug/flashprog.exe ./arm-ada/bin/flashprog
 cp -v ../tools/rca/bin/Debug/rca.exe ./arm-ada/bin/rca
@@ -65,12 +66,18 @@ chmod -v +x arm-ada/bin/*
 
 echo "Copie de la derniere version en date du systeme dans arm-ada/firmware"
 if [ ! -d arm-ada/firmware ]; then
-  mkdir -v arm-ada/firmware
+    mkdir -v arm-ada/firmware
 fi
 
-cp -v ../sw4stm32/System/Debug/System.hex arm-ada/firmware/firmware_$version_os.hex
+cp -v ../firmware/firmware.hex arm-ada/firmware/firmware_$version_os.hex
 xz -zv arm-ada/firmware/firmware_$version_os.hex
 cp -v arm-ada/firmware/firmware_$version_os.hex.xz arm-ada/firmware/firmware_LATEST.hex.xz
+
+cp -v ../firmware/firmware-ng.hex arm-ada/firmware/firmware-ng_LATEST.hex
+xz -zv arm-ada/firmware/firmware-ng_LATEST.hex
+
+cp -v ../firmware/firmware-ng.elf arm-ada/firmware/firmware-ng_LATEST.elf
+xz -zv arm-ada/firmware/firmware-ng_LATEST.elf
 
 echo "Construction de la bibliotheque wrapper"
 cd arm-ada/lib/wrapper
@@ -84,64 +91,10 @@ make clean
 make
 cd ../../..
 
-echo "configuration des TP"
-# echo "Compilation des solutions"
-# cd arm-ada/TP/solutions/TP1
-# make clean
-# make ressources
-# make
-# cp solution.hex ../../TP1
-
-# cd ../TP2/test_correl
-# make clean
-# make ressources
-# make
-# cp solution.hex ../../../TP2/test_correl
-
-# cd ../../TP2/tp_mouv
-# make clean
-# make ressources
-# make
-# cp solution.hex ../../../TP2/tp_mouv
-
-# cd ../../TP2/simon
-# make clean
-# make ressources
-# make
-# cp solution.hex ../../../TP2/simon
-
-# cd ../../TP3/dicho
-# make clean
-# make ressources
-# make
-# cp solution.hex ../../../TP3/dicho
-
-# cd ../../TP3/koch
-# make clean
-# make ressources
-# make
-# cp solution.hex ../../../TP3/koch
-
-# cd ../../TP4/magneto
-# make clean
-# make ressources
-# make
-# cp solution.hex ../../../TP4/magneto
-
-# cd ../../TP4/snake
-# make clean
-# make ressources
-# make
-# cp solution.hex ../../../TP4/snake
-
-# cd ../../..
-# rm -rf solutions
-# cd ../..
-
 echo "Preparation des TP"
 cd arm-ada/TP/TP1
 make clean
-rm -rf *.o *.ali
+rm -rf *.o *.ali *.*~
 make ressources
 make
 make new
@@ -150,7 +103,7 @@ make doc
 
 cd ../TP2
 make clean
-rm -rf *.o *.ali
+rm -rf *.o *.ali *.*~
 make ressources
 make
 make new
@@ -159,7 +112,7 @@ make doc
 
 cd ../TP3/dicho
 make clean
-rm -rf *.o *.ali
+rm -rf *.o *.ali *.*~
 make ressources
 make
 make new
@@ -168,7 +121,7 @@ make doc
 
 cd ../../TP3/koch
 make clean
-rm -rf *.o *.ali
+rm -rf *.o *.ali *.*~
 make ressources
 make
 make new
@@ -177,7 +130,7 @@ make doc
 
 cd ../../TP4/magneto
 make clean
-rm -rf *.o *.ali
+rm -rf *.o *.ali *.*~
 make ressources
 make
 make new
@@ -186,7 +139,7 @@ make doc
 
 cd ../../TP4/snake
 make clean
-rm -rf *.o *.ali
+rm -rf *.o *.ali *.*~
 make ressources
 make
 make new
@@ -204,8 +157,8 @@ if read response; then
     if [ "$response" = "Y" -o "$response" = "y" ]; then
         echo ""
         echo "Transfert sur gei-srv"
-	    scp arm-ada_home_$version.tar.xz dimercur@srv-gei:/services/depot/
-
+        scp arm-ada_home_$version.tar.xz dimercur@srv-gei:/services/depot/
+        
         echo ""
         echo "Transfert sur commetud"
         scp arm-ada_home_$version.tar.xz dimercur@srv-ens:"/home/commetud/2eme\ Annee\ IMACS/ADA"
