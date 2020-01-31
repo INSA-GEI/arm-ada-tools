@@ -14,10 +14,13 @@ b~*
 *.lib
 *.*~
 *~
+
 export/*.xz
 export/arm-ada
 export/arm-ada_home*.tar.xz
 export/index.html
+export/firmware/
+
 *.iex
 *#
 

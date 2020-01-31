@@ -1,0 +1,19 @@
+#!/bin/sh
+STLINK_PROGRAMMER_PATH=/usr/local/insa/STM32Cube/STM32CubeProgrammer/bin
+
+# Telecharge la derniere version de l'OS
+mkdir ~/.arm-ada-update.tmp
+cd ~/.arm-ada-update.tmp
+
+cp "/home/commetud/2eme Annee IMACS/ADA/firmware/firmware-ng_LATEST.elf.xz" .
+
+xz -d firmware-ng_LATEST.elf.xz
+
+# Telecharge l'OS
+$STLINK_PROGRAMMER_PATH/STM32_Programmer_CLI -c port=SWD -d firmware-ng_LATEST.elf -rst
+
+# Clean up
+cd ~
+rm -rf ~/.arm-ada-update.tmp
+
+echo Done

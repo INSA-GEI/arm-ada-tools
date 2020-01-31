@@ -56,11 +56,11 @@ if [ -e "$filename" ]; then
     echo "Recopie du travail déjà accompli"
     
     cp -v $filename/TP/TP1/missionpacman.adb TP/TP1/
-    cp -v $filename/TP/TP2/simon/missionSimon.adb TP/TP2/simon
-    cp -v $filename/TP/TP3/dicho/dicho.adb TP/TP3/dicho
-    cp -v $filename/TP/TP3/koch/koch.adb TP/TP3/koch
-    cp -v $filename/TP/TP4/magneto/calib.adb TP/TP4/magneto
-    cp -v $filename/TP/TP4/snake/snake.adb TP/TP4/snake
+    cp -v $filename/TP/TP2/missionsimon.adb TP/TP2/
+    cp -v $filename/TP/TP3/dicho/missiondicho.adb TP/TP3/dicho
+    cp -v $filename/TP/TP3/koch/missionkoch.adb TP/TP3/koch
+    cp -v $filename/TP/TP4/magneto/missionmagneto.adb TP/TP4/magneto
+    cp -v $filename/TP/TP4/snake/missionsnake.adb TP/TP4/snake
 fi
 
 echo "Ajout des extensions necessaires à codium"

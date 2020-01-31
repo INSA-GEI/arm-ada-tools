@@ -13,3 +13,8 @@
 /home/dimercur/Documents/Travail/git/arm-ada/tools/flashprog/bin/Debug/flashprog.exe
 /home/dimercur/Documents/Travail/git/arm-ada/tools/flashprog/obj/x86/Debug/flashprog.exe
 /home/dimercur/Documents/Travail/git/arm-ada/tools/flashprog/obj/x86/Debug/flashprog.pdb
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/flashprog/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/flashprog/bin/Debug/flashprog.pdb
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/flashprog/bin/Debug/flashprog.exe
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/flashprog/obj/x86/Debug/flashprog.exe
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/flashprog/obj/x86/Debug/flashprog.pdb

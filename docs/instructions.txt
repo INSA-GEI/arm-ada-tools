@@ -1,0 +1,117 @@
+Notes pour arm-ada 2020
+
+IDE pour le developpement:
+    * Emacs (emacs)
+        - utilisation de make dans un terminal
+    * Visual Studio Code (codium) 
+        - utilisation de make dans un terminal
+        - utilisation de make dans le terminal integré
+        - commande pour lancer make integré à l'IDE
+
+Raccourcis codium:
+    * Ouvrir le terminal integré:
+        - Ctrl+Shift+²
+        - par le menu View > Terminal.
+        - Par la palette de commande (Ctrl+Shift+P), choisir la commande : Toggle Integrated Terminal.
+
+    * lancer une tache:
+        - Ctrl+Shift+B
+
+Anciennes consoles
+    Pour compiler:
+        * Sous emacs: 
+            - make (parfois avec "make ressources" à faire avant si le
+              message "error: "sprites.ali" not found, "sprites.ads" must be compiled" apparait
+
+        * Sous codium: 
+            - dans le terminal (intégré ou pas): make (parfois avec "make ressources" à faire avant si le
+              message "error: "sprites.ali" not found, "sprites.ads" must be compiled" apparait
+
+            - Ctrl+Shift+B puis choisir "build"
+
+    Pour installer le programme
+        * Sous emacs: 
+            - make install
+
+        * Sous codium: 
+            - dans le terminal (intégré ou pas): make install
+
+            - Ctrl+Shift+B puis choisir "install"
+
+    Pour nettoyer le programme
+        * Sous emacs: 
+            - make clean
+
+        * Sous codium: 
+            - dans le terminal (intégré ou pas): make clean
+
+            - Ctrl+Shift+B puis choisir "clean"
+
+    Pour regenerer le fichier de sprites
+        * Sous emacs: 
+            - make ressources
+
+        * Sous codium: 
+            - dans le terminal (intégré ou pas): make ressource
+
+            - Ctrl+Shift+B puis choisir "generate ressources"
+
+Nouvelles consoles:
+    Pour compiler:
+        * Sous emacs: 
+            - make new (parfois avec "make ressources" à faire avant si le
+              message "error: "sprites.ali" not found, "sprites.ads" must be compiled" apparait
+
+        * Sous codium: 
+            - dans le terminal (intégré ou pas): make new (parfois avec "make ressources" à faire avant si le
+              message "error: "sprites.ali" not found, "sprites.ads" must be compiled" apparait
+
+            - Ctrl+Shift+B puis choisir "build (new console)"
+
+    Pour installer le programme
+        * Sous emacs: 
+            - make install-new
+
+        * Sous codium: 
+            - dans le terminal (intégré ou pas): make install-new
+
+            - Ctrl+Shift+B puis choisir "install (new console)"
+
+    Pour nettoyer le programme
+        * Sous emacs: 
+            - make clean
+
+        * Sous codium: 
+            - dans le terminal (intégré ou pas): make clean
+
+            - Ctrl+Shift+B puis choisir "clean"
+
+    Pour regenerer le fichier de sprites
+        * Sous emacs: 
+            - make ressources
+
+        * Sous codium: 
+            - dans le terminal (intégré ou pas): make ressource
+
+            - Ctrl+Shift+B puis choisir "generate ressources"
+
+Debug sur console (nouvelle console uniquement et sous codium uniquement)
+	Pour debugger un programme, voici la marche à suivre:
+
+	    - Compiler et telecharger le programme dans la console
+	    - Dans le bandeau de gauche, cliquer sur l'icone de debug (une sorte de cafard)
+	    - Avant de lancer le programme en debug, inserer un point d'arret au debut du programme 
+              (dans le bloc BEGIN ... END principal) en cliquant dans la marge : un point rouge apparait
+	    - Dans la partie gauche de l'ecran, en haut, selectionner dans la liste deroulante 
+              "debug program" puis cliquer sur la fleche verte à coté.
+	    - Le debugger se lance et doit s'arreter au niveau du point rouge (une fleche jaune se met dessus)
+	    - Seul le bouton "continu" fonctionne: step in, step out, step over sont inutiles
+	    - Lorsque le programme est sur un point d'arret, il faut le supprimer et en mettre un autre 
+              plus loin pour que le programme reprenne son execution.
+            - On peut aussi cliquer droit sur une ligne et choisir executer jusqu'à la ligne
+            - Les variables globales s'affichent dans la colonne de gauche: on peut derouler les tableaux et structures
+            - On peut aussi voir les valeur des variables en survolant du curseur la variable.
+            - Pour terminer le debug, cliquez sur le carré rouge
+	
+
+    

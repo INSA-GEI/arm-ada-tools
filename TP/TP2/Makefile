@@ -90,5 +90,5 @@ endif
 export:
 	mv $(PROJECT_NAME).hex solution.hex
 	mv $(PROJECT_NAME_NEW).hex solution-new.hex
-	rm -f simon.adb $(PROJECT_NAME).o $(PROJECT_NAME).ali b~* $(TARGET) $(PROJECT_NAME_NEW).hex $(PROJECT_NAME).hex *.bin *.elf ada-program.map *.log
+	rm -f simon.adb $(PROJECT_NAME).o $(PROJECT_NAME).ali b~* $(TARGET) $(PROJECT_NAME_NEW).hex $(PROJECT_NAME).hex *.bin *.elf ada-program.map *.log *.ps*
 	mv $(PROJECT_NAME).adb.tp $(PROJECT_NAME).adb

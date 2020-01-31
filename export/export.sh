@@ -46,7 +46,7 @@ mkdir -v arm-ada
 echo "Copie des bibliotheques, des scripts, des TP"
 cp -Rv ../lib ./arm-ada
 cp -Rv ../TP ./arm-ada
-cp -Rv ../scripts ./arm-ada
+# cp -Rv ../scripts ./arm-ada
 cp -Rv ../exemples ./arm-ada
 
 echo "Compilation des outils"
@@ -61,23 +61,24 @@ cp -v ../tools/adashell/bin/Debug/adashell.exe ./arm-ada/bin/adashell
 cp -v ../tools/flashprog/bin/Debug/flashprog.exe ./arm-ada/bin/flashprog
 cp -v ../tools/rca/bin/Debug/rca.exe ./arm-ada/bin/rca
 cp -v ../tools/sim-ada/bin/Debug/sim-ada.exe ./arm-ada/bin/sim-ada
-cp -v arm-ada/scripts/arm-ada-update arm-ada/bin/
+cp -v ../scripts/arm-ada-update arm-ada/bin/
+cp -v ../scripts/arm-ada-update-ng arm-ada/bin/
 chmod -v +x arm-ada/bin/*
 
-echo "Copie de la derniere version en date du systeme dans arm-ada/firmware"
-if [ ! -d arm-ada/firmware ]; then
-    mkdir -v arm-ada/firmware
-fi
+# echo "Copie de la derniere version en date du systeme dans arm-ada/firmware"
+# if [ ! -d arm-ada/firmware ]; then
+#     mkdir -v arm-ada/firmware
+# fi
 
-cp -v ../firmware/firmware.hex arm-ada/firmware/firmware_$version_os.hex
-xz -zv arm-ada/firmware/firmware_$version_os.hex
-cp -v arm-ada/firmware/firmware_$version_os.hex.xz arm-ada/firmware/firmware_LATEST.hex.xz
+# cp -v ../firmware/firmware.hex arm-ada/firmware/firmware_$version_os.hex
+# xz -zv arm-ada/firmware/firmware_$version_os.hex
+# cp -v arm-ada/firmware/firmware_$version_os.hex.xz arm-ada/firmware/firmware_LATEST.hex.xz
 
-cp -v ../firmware/firmware-ng.hex arm-ada/firmware/firmware-ng_LATEST.hex
-xz -zv arm-ada/firmware/firmware-ng_LATEST.hex
+# cp -v ../firmware/firmware-ng.hex arm-ada/firmware/firmware-ng_LATEST.hex
+# xz -zv arm-ada/firmware/firmware-ng_LATEST.hex
 
-cp -v ../firmware/firmware-ng.elf arm-ada/firmware/firmware-ng_LATEST.elf
-xz -zv arm-ada/firmware/firmware-ng_LATEST.elf
+# cp -v ../firmware/firmware-ng.elf arm-ada/firmware/firmware-ng_LATEST.elf
+# xz -zv arm-ada/firmware/firmware-ng_LATEST.elf
 
 echo "Construction de la bibliotheque wrapper"
 cd arm-ada/lib/wrapper
@@ -151,6 +152,27 @@ cd ../../../..
 echo "creation de l'archive arm-ada_home"
 tar Jcf arm-ada_home_$version.tar.xz arm-ada
 
+echo "Copie des firmwares"
+if [ -d firmware ]; then
+    rm -rf firmware
+fi
+
+mkdir -v firmware
+
+cp -v ../firmware/firmware.hex firmware/firmware_$version_os.hex
+xz -zv firmware/firmware_$version_os.hex
+cp -v firmware/firmware_$version_os.hex.xz firmware/firmware_LATEST.hex.xz
+
+cp -v ../firmware/firmware.elf firmware/firmware_$version_os.elf
+xz -zv firmware/firmware_$version_os.elf
+cp -v firmware/firmware_$version_os.elf.xz firmware/firmware_LATEST.elf.xz
+
+cp -v ../firmware/firmware-ng.hex firmware/firmware-ng_LATEST.hex
+xz -zv firmware/firmware-ng_LATEST.hex
+
+cp -v ../firmware/firmware-ng.elf firmware/firmware-ng_LATEST.elf
+xz -zv firmware/firmware-ng_LATEST.elf
+
 response=""
 echo -n "Voulez vous transferer les archives sur le serveur ? [y/N] : "
 if read response; then
@@ -160,8 +182,10 @@ if read response; then
         scp arm-ada_home_$version.tar.xz dimercur@srv-gei:/services/depot/
         
         echo ""
-        echo "Transfert sur commetud"
+        echo "Transfert sur commetud de arm-ada_home_$version.tar.xz"
         scp arm-ada_home_$version.tar.xz dimercur@srv-ens:"/home/commetud/2eme\ Annee\ IMACS/ADA"
+        echo "Transfert sur commetud du repertoire firmware"
+        scp -r firmware dimercur@srv-ens:"/home/commetud/2eme\ Annee\ IMACS/ADA"
     fi
 fi
 

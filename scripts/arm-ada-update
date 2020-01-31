@@ -4,7 +4,8 @@
 mkdir ~/.arm-ada-update.tmp
 cd ~/.arm-ada-update.tmp
 
-cp -v ~/arm-ada/firmware/firmware_LATEST.hex.xz .
+cp "/home/commetud/2eme Annee IMACS/ADA/firmware/firmware_LATEST.hex.xz" .
+
 xz -d firmware_LATEST.hex.xz
 
 # Telecharge l'OS

@@ -34,3 +34,10 @@
 /home/dimercur/Documents/Travail/git/arm-ada/tools/rca/obj/x86/Debug/rca.exe
 /home/dimercur/Documents/Travail/git/arm-ada/tools/rca/obj/x86/Debug/rca.exe.mdb
 /home/dimercur/Documents/Travail/git/arm-ada/tools/rca/obj/x86/Debug/rca.pdb
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/rca/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/rca/bin/Debug/rca.exe.mdb
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/rca/bin/Debug/rca.pdb
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/rca/bin/Debug/rca.exe
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/rca/obj/x86/Debug/rca.exe
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/rca/obj/x86/Debug/rca.exe.mdb
+/home/dimercur/Documents/Travail/git/arm-ada-tools/tools/rca/obj/x86/Debug/rca.pdb
